@@ -3,7 +3,6 @@
     <PropertyGroup>
         <TargetFramework>net5.0</TargetFramework>
         <RuntimeIdentifiers>win-x64;linux-x64</RuntimeIdentifiers>
-        <RootNamespace>Barbecue_webapi</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>

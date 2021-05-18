@@ -1,12 +1,18 @@
 ﻿using System;
+using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
+using Services;
 
 namespace Seeder
 {
-    class Program
+    public static class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var serviceProvider = new ServiceCollection().AddBarbecueDependencies().BuildServiceProvider();
+
+            await new SeedData(serviceProvider).Seed();
+            Console.WriteLine("Seeded successfully");
         }
     }
 }

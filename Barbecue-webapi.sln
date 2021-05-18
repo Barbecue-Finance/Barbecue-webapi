@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Barbecue-webapi", "Barbecue-webapi\Barbecue-webapi.csproj", "{7EC15271-2769-43D8-95CC-F9D163DB9329}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BarbecueAPI", "BarbecueAPI\BarbecueAPI.csproj", "{7EC15271-2769-43D8-95CC-F9D163DB9329}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{733A721F-9989-4E48-AAE8-439B082B5CEA}"
 EndProject
