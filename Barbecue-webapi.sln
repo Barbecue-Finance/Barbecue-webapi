@@ -2,6 +2,14 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Barbecue-webapi", "Barbecue-webapi\Barbecue-webapi.csproj", "{7EC15271-2769-43D8-95CC-F9D163DB9329}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{733A721F-9989-4E48-AAE8-439B082B5CEA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Services.csproj", "{BFECB67A-1C78-4E69-93C7-8E085EF93859}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Seeder", "Seeder\Seeder.csproj", "{AD401FC3-DC76-453F-A105-5DE7159FB32D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "Models\Models.csproj", "{D4687D52-115C-4F91-A211-7D85D68C7015}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +20,21 @@ Global
 		{7EC15271-2769-43D8-95CC-F9D163DB9329}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7EC15271-2769-43D8-95CC-F9D163DB9329}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7EC15271-2769-43D8-95CC-F9D163DB9329}.Release|Any CPU.Build.0 = Release|Any CPU
+		{733A721F-9989-4E48-AAE8-439B082B5CEA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{733A721F-9989-4E48-AAE8-439B082B5CEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{733A721F-9989-4E48-AAE8-439B082B5CEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{733A721F-9989-4E48-AAE8-439B082B5CEA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BFECB67A-1C78-4E69-93C7-8E085EF93859}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BFECB67A-1C78-4E69-93C7-8E085EF93859}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BFECB67A-1C78-4E69-93C7-8E085EF93859}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BFECB67A-1C78-4E69-93C7-8E085EF93859}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD401FC3-DC76-453F-A105-5DE7159FB32D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD401FC3-DC76-453F-A105-5DE7159FB32D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD401FC3-DC76-453F-A105-5DE7159FB32D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD401FC3-DC76-453F-A105-5DE7159FB32D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4687D52-115C-4F91-A211-7D85D68C7015}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4687D52-115C-4F91-A211-7D85D68C7015}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4687D52-115C-4F91-A211-7D85D68C7015}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4687D52-115C-4F91-A211-7D85D68C7015}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
