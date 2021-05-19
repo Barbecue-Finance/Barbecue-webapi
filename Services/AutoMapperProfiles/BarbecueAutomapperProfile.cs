@@ -1,9 +1,11 @@
 using System;
+using System.Linq;
 using AutoMapper;
 using Models.Db;
 using Models.Db.Account;
 using Models.DTOs.Groups;
 using Models.DTOs.Invites;
+using Models.DTOs.Purses;
 using Models.DTOs.Users;
 
 namespace Services.AutoMapperProfiles
@@ -35,6 +37,14 @@ namespace Services.AutoMapperProfiles
 
             CreateMap<Group, GroupWithIdDto>().ReverseMap();
             CreateMap<Group, CreateGroupDto>().ReverseMap();
+
+            CreateMap<Purse, PurseWithIdDto>()
+                .ForMember(
+                    dto => dto.Amount,
+                    cfg => cfg.MapFrom(
+                        p => p.IncomingOperations.Sum(o => o.Amount) - p.OutComingOperations.Sum(o => o.Amount)
+                    )
+                ).ReverseMap();
         }
     }
 }

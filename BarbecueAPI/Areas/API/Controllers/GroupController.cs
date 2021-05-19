@@ -72,7 +72,7 @@ namespace BarbecueAPI.Areas.API.Controllers
 
         [HttpGet]
         [TypeFilter(typeof(AuthTokenFilter))]
-        public async Task<ActionResult<GroupWithIdDto>> Leave([Id(typeof(User))] long userId, [Id(typeof(Group))] long groupId)
+        public async Task<ActionResult> Leave([Id(typeof(User))] long userId, [Id(typeof(Group))] long groupId)
         {
             try
             {
