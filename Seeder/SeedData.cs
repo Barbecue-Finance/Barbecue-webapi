@@ -37,9 +37,16 @@ namespace Seeder
 
             await _userService.Create(new CreateUserDto()
             {
-                Login = "User",
-                Password = "User",
-                Username = "Unique Username"
+                Login = "User1",
+                Password = "User1",
+                Username = "Unique Username1"
+            });
+            
+            await _userService.Create(new CreateUserDto()
+            {
+                Login = "User2",
+                Password = "User2",
+                Username = "Unique Username2"
             });
         }
     }

@@ -39,13 +39,21 @@ namespace Infrastructure
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<User>()
-                .HasMany(u => u.UserGroups)
+                .HasMany(u => u.Groups)
                 .WithMany(g => g.Users)
-                .UsingEntity<UserToUserGroup>(
-                    arg => arg.HasOne(e => e.UserGroup).WithMany(g => g.UsersRelation),
-                    arg => arg.HasOne(e => e.User).WithMany(u => u.UserGroupsRelation),
-                    obj => obj.HasKey(e => new {e.UserId, e.UserGroupId})
+                .UsingEntity<UserToGroup>(
+                    arg => arg.HasOne(e => e.Group).WithMany(g => g.UsersRelation),
+                    arg => arg.HasOne(e => e.User).WithMany(u => u.GroupsRelation),
+                    obj => obj.HasKey(e => new {e.UserId, UserGroupId = e.GroupId})
                 );
+
+            modelBuilder.Entity<Invite>()
+                .HasOne(i => i.Issuer)
+                .WithMany(u => u.IssuedInvites);
+
+            modelBuilder.Entity<Invite>()
+                .HasOne(i => i.Recipient)
+                .WithMany(u => u.ReceivedInvites);
         }
 
         public DbSet<User> UserAccounts { get; set; }
@@ -53,7 +61,11 @@ namespace Infrastructure
         public DbSet<TokenSession> TokenSessions { get; set; }
         public DbSet<IncomeMoneyOperation> IncomeMoneyOperations { get; set; }
         public DbSet<OutComeMoneyOperation> OutComeMoneyOperations { get; set; }
+
         public DbSet<Purse> Purses { get; set; }
-        public DbSet<UserGroup> UserGroups { get; set; }
+        public DbSet<Group> Groups { get; set; }
+        public DbSet<Invite> Invites { get; set; }
+
+        public DbSet<UserToGroup> UserToGroups { get; set; }
     }
 }

@@ -3,16 +3,16 @@ using Models.Db.Account;
 
 namespace Models.Db
 {
-    public class UserToUserGroup
+    public class UserToGroup
     {
         [ForeignKey(nameof(User))]
         public long UserId { get; set; }
 
         public User User { get; set; }
 
-        [ForeignKey(nameof(UserGroup))]
-        public long UserGroupId { get; set; }
+        [ForeignKey(nameof(Group))]
+        public long GroupId { get; set; }
         
-        public UserGroup UserGroup { get; set; }
+        public Group Group { get; set; }
     }
 }

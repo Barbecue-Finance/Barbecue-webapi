@@ -14,7 +14,10 @@ namespace Models.Db.Account
         
         public virtual ICollection<TokenSession> TokenSessions { get; set; }
 
-        public virtual ICollection<UserGroup> UserGroups { get; set; }
-        public virtual ICollection<UserToUserGroup> UserGroupsRelation { get; set; }
+        public virtual ICollection<Group> Groups { get; set; }
+        public virtual ICollection<UserToGroup> GroupsRelation { get; set; }
+        
+        public virtual ICollection<Invite> IssuedInvites { get; set; }
+        public virtual ICollection<Invite> ReceivedInvites { get; set; }
     }
 }

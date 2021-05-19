@@ -52,6 +52,8 @@ namespace Services
 
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ITokenSessionRepository, TokenSessionRepository>();
+            services.AddScoped<IGroupRepository, GroupRepository>();
+            services.AddScoped<IInviteRepository, InviteRepository>();
             
             return services;
         }
@@ -68,6 +70,8 @@ namespace Services
 
             services.AddScoped<ITokenSessionService, TokenSessionService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IInviteService, InviteService>();
+            services.AddScoped<IGroupService, GroupService>();
             
             return services;
         }

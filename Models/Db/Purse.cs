@@ -7,9 +7,9 @@ namespace Models.Db
 {
     public class Purse : IdEntity
     {
-        [ForeignKey(nameof(UserGroup))]
+        [ForeignKey(nameof(Group))]
         public long UserGroupId { get; set; }
-        public virtual UserGroup UserGroup { get; set; }
+        public virtual Group Group { get; set; }
         
         public virtual ICollection<OutComeMoneyOperation> OutComingOperations { get; set; }
         public virtual ICollection<IncomeMoneyOperation> IncomingOperations { get; set; }

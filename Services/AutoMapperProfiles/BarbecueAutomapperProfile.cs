@@ -1,6 +1,9 @@
 using System;
 using AutoMapper;
+using Models.Db;
 using Models.Db.Account;
+using Models.DTOs.Groups;
+using Models.DTOs.Invites;
 using Models.DTOs.Users;
 
 namespace Services.AutoMapperProfiles
@@ -27,7 +30,11 @@ namespace Services.AutoMapperProfiles
             CreateMap<User, UpdateUserDto>().ReverseMap();
             CreateMap<User, UserWithIdDto>().ReverseMap();
 
+            CreateMap<Invite, InviteWithIdDto>().ReverseMap();
+            CreateMap<Invite, CreateInviteDto>().ReverseMap();
 
+            CreateMap<Group, GroupWithIdDto>().ReverseMap();
+            CreateMap<Group, CreateGroupDto>().ReverseMap();
         }
     }
 }
