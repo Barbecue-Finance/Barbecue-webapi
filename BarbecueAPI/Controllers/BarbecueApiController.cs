@@ -21,19 +21,19 @@ namespace BarbecueAPI.Controllers
         }
 
         [NonAction]
-        protected ActionResult AkianaError(string error)
+        protected ActionResult BarbecueError(string error)
         {
             return BadRequest(new ErrorDto(error));
         }
 
         [NonAction]
-        protected ActionResult AkianaMessage(string message)
+        protected ActionResult BarbecueMessage(string message)
         {
             return Ok(new MessageDto(message));
         }
 
         [NonAction]
-        protected async Task<User> GetRequestAccount()
+        protected async Task<User> GetRequestUser()
         {
             var headers = ControllerContext.HttpContext.Request.Headers;
             if (headers.ContainsKey("auth-token"))
@@ -48,12 +48,12 @@ namespace BarbecueAPI.Controllers
                 }
                 else
                 {
-                    throw new ArgumentException($"{nameof(GetRequestAccount)}() Was Called With No Session");
+                    throw new ArgumentException($"{nameof(GetRequestUser)}() Was Called With No Session");
                 }
             }
             else
             {
-                throw new ArgumentException($"{nameof(GetRequestAccount)}() Was Called With No auth-token Passed");
+                throw new ArgumentException($"{nameof(GetRequestUser)}() Was Called With No auth-token Passed");
             }
         }
     }

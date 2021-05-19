@@ -6,9 +6,9 @@ using Models.Db.Account;
 
 namespace Infrastructure.Implementations
 {
-    public class WorkerRepository : IdRepositoryBase<User>, IUserRepository
+    public class UserRepository : IdRepositoryBase<User>, IUserRepository
     {
-        public WorkerRepository(BarbecueDbContext context) : base(context)
+        public UserRepository(BarbecueDbContext context) : base(context)
         {
         }
 

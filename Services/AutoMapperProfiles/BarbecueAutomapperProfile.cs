@@ -1,5 +1,7 @@
 using System;
 using AutoMapper;
+using Models.Db.Account;
+using Models.DTOs.Users;
 
 namespace Services.AutoMapperProfiles
 {
@@ -21,8 +23,11 @@ namespace Services.AutoMapperProfiles
             // CreateMap<LatLngDto, LatLng>().ReverseMap();
             // -----------
 
+            CreateMap<User, CreateUserDto>().ReverseMap();
+            CreateMap<User, UpdateUserDto>().ReverseMap();
+            CreateMap<User, UserWithIdDto>().ReverseMap();
 
-            // CreateMap<UserAccount, CreateWorkerAccountDto>().ReverseMap();
+
         }
     }
 }

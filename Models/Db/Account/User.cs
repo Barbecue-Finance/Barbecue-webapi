@@ -13,5 +13,8 @@ namespace Models.Db.Account
         public string Password { get; set; }
         
         public virtual ICollection<TokenSession> TokenSessions { get; set; }
+
+        public virtual ICollection<UserGroup> UserGroups { get; set; }
+        public virtual ICollection<UserToUserGroup> UserGroupsRelation { get; set; }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
+using Models.Db;
 using Models.Db.Account;
+using Models.Db.MoneyOperations;
 using Models.Db.Sessions;
 
 namespace Infrastructure
@@ -20,7 +22,7 @@ namespace Infrastructure
             if (optionsBuilder.IsConfigured) return;
 #if DEBUG
             Console.WriteLine("Using debug connection");
-            optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=Barbecue-Finance;Username=postgres;Password=root");
+            optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=BarbecueFinance;Username=postgres;Password=root");
 #else
             // Console.WriteLine("Using Environment variable connection");
             var connectionString = Environment.GetEnvironmentVariable("CONN_STR");
@@ -35,10 +37,23 @@ namespace Infrastructure
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<User>()
+                .HasMany(u => u.UserGroups)
+                .WithMany(g => g.Users)
+                .UsingEntity<UserToUserGroup>(
+                    arg => arg.HasOne(e => e.UserGroup).WithMany(g => g.UsersRelation),
+                    arg => arg.HasOne(e => e.User).WithMany(u => u.UserGroupsRelation),
+                    obj => obj.HasKey(e => new {e.UserId, e.UserGroupId})
+                );
         }
 
         public DbSet<User> UserAccounts { get; set; }
 
         public DbSet<TokenSession> TokenSessions { get; set; }
+        public DbSet<IncomeMoneyOperation> IncomeMoneyOperations { get; set; }
+        public DbSet<OutComeMoneyOperation> OutComeMoneyOperations { get; set; }
+        public DbSet<Purse> Purses { get; set; }
+        public DbSet<UserGroup> UserGroups { get; set; }
     }
 }

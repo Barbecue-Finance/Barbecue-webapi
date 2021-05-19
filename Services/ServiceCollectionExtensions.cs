@@ -1,7 +1,11 @@
 using System;
 using System.Threading.Tasks;
 using Infrastructure;
+using Infrastructure.Abstractions;
+using Infrastructure.Implementations;
 using Microsoft.Extensions.DependencyInjection;
+using Services.ApiServices.Abstractions;
+using Services.ApiServices.Implementations;
 using Services.AutoMapperProfiles;
 using Services.Common.Abstractions;
 using Services.Common.Implementations;
@@ -15,7 +19,7 @@ namespace Services
             // DbContext will take connection string from Environment or throw
             services.AddDbContext<BarbecueDbContext>();
 
-            services.AddAkianaRepositories();
+            services.AddBarbecueRepositories();
 
             services.AddBarbecueApiServices();
             
@@ -42,9 +46,13 @@ namespace Services
             return services;
         }
 
-        public static IServiceCollection AddAkianaRepositories(this IServiceCollection services)
+        public static IServiceCollection AddBarbecueRepositories(this IServiceCollection services)
         {
             // Add Repositories
+
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<ITokenSessionRepository, TokenSessionRepository>();
+            
             return services;
         }
 
@@ -57,6 +65,10 @@ namespace Services
         public static IServiceCollection AddBarbecueApiServices(this IServiceCollection services)
         {
             // Add Services
+
+            services.AddScoped<ITokenSessionService, TokenSessionService>();
+            services.AddScoped<IUserService, UserService>();
+            
             return services;
         }
 

@@ -2,6 +2,8 @@
 using System.Threading.Tasks;
 using Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
+using Models.DTOs.Users;
+using Services.ApiServices.Abstractions;
 
 namespace Seeder
 {
@@ -9,10 +11,14 @@ namespace Seeder
     {
         private IServiceScope _serviceScope;
 
+        private IUserService _userService;
+
         public SeedData(IServiceProvider provider)
         {
             _serviceScope = provider.CreateScope();
             Context = _serviceScope.ServiceProvider.GetRequiredService<BarbecueDbContext>();
+
+            _userService = _serviceScope.ServiceProvider.GetRequiredService<IUserService>();
         }
 
         ~SeedData()
@@ -28,6 +34,13 @@ namespace Seeder
             await Context.Database.EnsureCreatedAsync();
 
             Console.WriteLine("Database dropped and recreated");
+
+            await _userService.Create(new CreateUserDto()
+            {
+                Login = "User",
+                Password = "User",
+                Username = "Unique Username"
+            });
         }
     }
 }
