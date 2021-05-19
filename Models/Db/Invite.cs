@@ -25,5 +25,6 @@ namespace Models.Db
         public InviteState State { get; set; }
         
         public DateTime IssuedAt { get; set; }
+        public DateTime? ResolvedAt { get; set; }
     }
 }

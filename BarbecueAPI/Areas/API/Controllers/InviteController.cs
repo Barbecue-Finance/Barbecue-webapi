@@ -117,5 +117,21 @@ namespace BarbecueAPI.Areas.API.Controllers
                 return BarbecueError(ex.Message);
             }
         }
+
+        [HttpGet]
+        [TypeFilter(typeof(AuthTokenFilter))]
+        public async Task<ActionResult<ICollection<InviteWithIdDto>>> GetByGroup([Id(typeof(Group))] long id)
+        {
+            try
+            {
+                var inviteWithIdDtos = await _inviteService.GetByGroup(id);
+
+                return Ok(inviteWithIdDtos);
+            }
+            catch (Exception ex)
+            {
+                return BarbecueError(ex.Message);
+            }
+        }
     }
 }

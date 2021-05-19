@@ -86,6 +86,7 @@ namespace Services.ApiServices.Implementations
             await _groupRepository.Update(group);
 
             invite.State = InviteState.Accepted;
+            invite.ResolvedAt = DateTime.Now;
 
             await _inviteRepository.Update(invite);
         }
@@ -95,6 +96,7 @@ namespace Services.ApiServices.Implementations
             var invite = await _inviteRepository.GetById(id);
 
             invite.State = InviteState.Rejected;
+            invite.ResolvedAt = DateTime.Now;
 
             await _inviteRepository.Update(invite);
         }
@@ -104,6 +106,7 @@ namespace Services.ApiServices.Implementations
             var invite = await _inviteRepository.GetById(id);
 
             invite.State = InviteState.Canceled;
+            invite.ResolvedAt = DateTime.Now;
 
             await _inviteRepository.Update(invite);
         }
@@ -126,6 +129,20 @@ namespace Services.ApiServices.Implementations
         {
             var invites = await _inviteRepository.GetMany(
                 i => i.IssuerId == id,
+                i => i.Recipient,
+                i => i.Issuer,
+                i => i.Group
+            );
+
+            var inviteWithIdDtos = _mapper.Map<ICollection<InviteWithIdDto>>(invites);
+
+            return inviteWithIdDtos;
+        }
+
+        public async Task<ICollection<InviteWithIdDto>> GetByGroup(long id)
+        {
+            var invites = await _inviteRepository.GetMany(
+                i => i.GroupId == id,
                 i => i.Recipient,
                 i => i.Issuer,
                 i => i.Group

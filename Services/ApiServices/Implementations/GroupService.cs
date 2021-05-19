@@ -39,11 +39,11 @@ namespace Services.ApiServices.Implementations
 
             var group = _mapper.Map<Group>(createGroupDto);
 
-            group.UsersRelation = new List<UserToGroup>() {new() {UserId = creator.Id}};
+            group.UsersRelation = new List<UserToGroup> {new() {UserId = creator.Id}};
 
             group.Purse = new Purse();
 
-            await _groupRepository.Add(@group);
+            await _groupRepository.Add(group);
 
             return group.Id;
         }

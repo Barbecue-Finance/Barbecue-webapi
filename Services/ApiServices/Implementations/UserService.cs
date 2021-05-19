@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Infrastructure.Abstractions;
@@ -62,6 +63,17 @@ namespace Services.ApiServices.Implementations
             var user = await _userRepository.GetById(id);
 
             await _userRepository.Remove(user);
+        }
+
+        public async Task<ICollection<UserWithIdDto>> GetByGroup(long id)
+        {
+            var users = await _userRepository.GetMany(
+                u => u.GroupsRelation.Any(r => r.GroupId == id)
+            );
+
+            var userWithIdDto = _mapper.Map<ICollection<UserWithIdDto>>(users);
+
+            return userWithIdDto;
         }
     }
 }

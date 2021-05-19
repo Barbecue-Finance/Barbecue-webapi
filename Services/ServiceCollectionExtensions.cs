@@ -55,6 +55,8 @@ namespace Services
             services.AddScoped<IGroupRepository, GroupRepository>();
             services.AddScoped<IInviteRepository, InviteRepository>();
             services.AddScoped<IPurseRepository, PurseRepository>();
+            services.AddScoped<IIncomeMoneyOperationRepository, IncomeMoneyOperationRepository>();
+            services.AddScoped<IOutComeMoneyOperationRepository, OutComeMoneyOperationRepository>();
             
             return services;
         }
@@ -73,6 +75,8 @@ namespace Services
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IInviteService, InviteService>();
             services.AddScoped<IGroupService, GroupService>();
+            services.AddScoped<IPurseService, PurseService>();
+            services.AddScoped<IMoneyOperationService, MoneyOperationService>();
             
             return services;
         }

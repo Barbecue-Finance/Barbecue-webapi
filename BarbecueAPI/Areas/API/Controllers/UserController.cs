@@ -5,6 +5,7 @@ using BarbecueAPI.Controllers;
 using BarbecueAPI.Filters;
 using Microsoft.AspNetCore.Mvc;
 using Models;
+using Models.Db;
 using Models.Db.Account;
 using Models.DTOs.Misc;
 using Models.DTOs.Requests;
@@ -121,6 +122,22 @@ namespace BarbecueAPI.Areas.API.Controllers
             {
                 await _userService.Remove(id);
                 return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BarbecueError(ex.Message);
+            }
+        }
+
+        [HttpGet]
+        [TypeFilter(typeof(AuthTokenFilter))]
+        public async Task<ActionResult<ICollection<UserWithIdDto>>> GetByGroup([Id(typeof(Group))] long id)
+        {
+            try
+            {
+                var userWithIdDtos = await _userService.GetByGroup(id);
+
+                return Ok(userWithIdDtos);
             }
             catch (Exception ex)
             {

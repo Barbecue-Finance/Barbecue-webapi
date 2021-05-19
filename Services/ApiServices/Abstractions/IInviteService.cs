@@ -16,6 +16,9 @@ namespace Services.ApiServices.Abstractions
         Task CancelInvite(long id);
 
         Task<ICollection<InviteWithIdDto>> GetIssued(long id);
+
         Task<ICollection<InviteWithIdDto>> GetReceived(long id);
+
+        Task<ICollection<InviteWithIdDto>> GetByGroup(long id);
     }
 }

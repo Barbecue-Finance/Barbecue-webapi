@@ -30,5 +30,18 @@ namespace Services.ApiServices.Implementations
 
             return purseWithIdDto;
         }
+
+        public async Task<PurseWithIdDto> GetByGroup(long id)
+        {
+            var purse = await _purseRepository.GetOne(
+                p => p.GroupId == id,
+                p => p.IncomingOperations,
+                p => p.OutComingOperations
+            );
+
+            var purseWithIdDto = _mapper.Map<PurseWithIdDto>(purse);
+
+            return purseWithIdDto;
+        }
     }
 }

@@ -6,5 +6,6 @@ namespace Services.ApiServices.Abstractions
     public interface IPurseService
     {
         Task<PurseWithIdDto> GetById(long id);
+        Task<PurseWithIdDto> GetByGroup(long id);
     }
 }

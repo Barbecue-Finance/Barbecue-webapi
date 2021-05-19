@@ -3,8 +3,11 @@ using System.Linq;
 using AutoMapper;
 using Models.Db;
 using Models.Db.Account;
+using Models.Db.MoneyOperations;
 using Models.DTOs.Groups;
 using Models.DTOs.Invites;
+using Models.DTOs.MoneyOperations;
+using Models.DTOs.MoneyOperations.Transfers;
 using Models.DTOs.Purses;
 using Models.DTOs.Users;
 
@@ -45,6 +48,22 @@ namespace Services.AutoMapperProfiles
                         p => p.IncomingOperations.Sum(o => o.Amount) - p.OutComingOperations.Sum(o => o.Amount)
                     )
                 ).ReverseMap();
+
+            CreateMap<Purse, IncomeOutcomeDto>()
+                .ForMember(dto => dto.Incoming, cfg => cfg.MapFrom(p => p.IncomingOperations))
+                .ForMember(dto => dto.OutComing, cfg => cfg.MapFrom(p => p.OutComingOperations));
+
+            CreateMap<IncomeMoneyOperation, MoneyOperationDto>().ReverseMap();
+            CreateMap<OutComeMoneyOperation, MoneyOperationDto>().ReverseMap();
+
+            CreateMap<CreateMoneyOperationDto, IncomeMoneyOperation>().ReverseMap();
+            CreateMap<CreateMoneyOperationDto, OutComeMoneyOperation>().ReverseMap();
+
+            CreateMap<CreateTransferOperationDto, IncomeMoneyOperation>()
+                .ForMember(o => o.PurseId, cfg => cfg.MapFrom(dto => dto.ToPurseId));
+
+            CreateMap<CreateTransferOperationDto, OutComeMoneyOperation>()
+                .ForMember(o => o.PurseId, cfg => cfg.MapFrom(dto => dto.FromPurseId));
         }
     }
 }

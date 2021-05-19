@@ -16,5 +16,6 @@ namespace Models.DTOs.Invites
         public string GroupTitle { get; set; }
 
         public DateTime IssuedAt { get; set; }
+        public DateTime? ResolvedAt { get; set; }
     }
 }

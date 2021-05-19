@@ -34,5 +34,21 @@ namespace BarbecueAPI.Areas.API.Controllers
                 return BarbecueError(ex.Message);
             }
         }
+
+        [HttpGet]
+        [TypeFilter(typeof(AuthTokenFilter))]
+        public async Task<ActionResult<PurseWithIdDto>> GetByGroup([Id(typeof(Group))] long id)
+        {
+            try
+            {
+                var purseWithIdDto = await _purseService.GetByGroup(id);
+
+                return Ok(purseWithIdDto);
+            }
+            catch (Exception ex)
+            {
+                return BarbecueError(ex.Message);
+            }
+        }
     }
 }
