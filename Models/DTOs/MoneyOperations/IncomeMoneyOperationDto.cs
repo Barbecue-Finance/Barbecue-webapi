@@ -4,7 +4,7 @@ using Models.Db;
 
 namespace Models.DTOs.MoneyOperations
 {
-    public class MoneyOperationDto
+    public class IncomeMoneyOperationDto
     {
         [Required]
         public long Id { get; set; }
@@ -22,5 +22,11 @@ namespace Models.DTOs.MoneyOperations
 
         [Id(typeof(Purse))]
         public long PurseId { get; set; }
+        
+        public long IncomeOperationCategoryId { get; set; }
+        
+        [Required(AllowEmptyStrings = true)]
+        [String(1, 64)]
+        public string IncomeOperationCategoryTitle { get; set; }
     }
 }

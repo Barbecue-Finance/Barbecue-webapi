@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
 using Models.Db.Common;
+using Models.Db.OperationCategories;
 
 namespace Models.Db.MoneyOperations
 {
@@ -14,6 +15,7 @@ namespace Models.Db.MoneyOperations
 
         [ForeignKey(nameof(Purse))]
         public long PurseId { get; set; }
+
         public virtual Purse Purse { get; set; }
     }
 }

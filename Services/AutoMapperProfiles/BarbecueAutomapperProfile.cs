@@ -4,10 +4,14 @@ using AutoMapper;
 using Models.Db;
 using Models.Db.Account;
 using Models.Db.MoneyOperations;
+using Models.Db.OperationCategories;
 using Models.DTOs.Groups;
 using Models.DTOs.Invites;
 using Models.DTOs.MoneyOperations;
 using Models.DTOs.MoneyOperations.Transfers;
+using Models.DTOs.OperationCategories;
+using Models.DTOs.OperationCategories.Income;
+using Models.DTOs.OperationCategories.OutCome;
 using Models.DTOs.Purses;
 using Models.DTOs.Users;
 
@@ -52,9 +56,9 @@ namespace Services.AutoMapperProfiles
             CreateMap<Purse, IncomeOutcomeDto>()
                 .ForMember(dto => dto.Incoming, cfg => cfg.MapFrom(p => p.IncomingOperations))
                 .ForMember(dto => dto.OutComing, cfg => cfg.MapFrom(p => p.OutComingOperations));
-
-            CreateMap<IncomeMoneyOperation, MoneyOperationDto>().ReverseMap();
-            CreateMap<OutComeMoneyOperation, MoneyOperationDto>().ReverseMap();
+            
+            CreateMap<IncomeMoneyOperation, IncomeMoneyOperationDto>().ReverseMap();
+            CreateMap<OutComeMoneyOperation, OutComeMoneyOperationDto>().ReverseMap();
 
             CreateMap<CreateMoneyOperationDto, IncomeMoneyOperation>().ReverseMap();
             CreateMap<CreateMoneyOperationDto, OutComeMoneyOperation>().ReverseMap();
@@ -64,6 +68,14 @@ namespace Services.AutoMapperProfiles
 
             CreateMap<CreateTransferOperationDto, OutComeMoneyOperation>()
                 .ForMember(o => o.PurseId, cfg => cfg.MapFrom(dto => dto.FromPurseId));
+
+            CreateMap<CreateIncomeOperationCategoryDto, IncomeOperationCategory>().ReverseMap();
+            CreateMap<IncomeOperationCategoryWithIdDto, IncomeOperationCategory>().ReverseMap();
+            CreateMap<UpdateIncomeOperationCategoryDto, IncomeOperationCategory>().ReverseMap();
+            
+            CreateMap<CreateOutComeOperationCategoryDto, OutComeOperationCategory>().ReverseMap();
+            CreateMap<OutComeOperationCategoryWithIdDto, OutComeOperationCategory>().ReverseMap();
+            CreateMap<UpdateOutComeOperationCategoryDto, OutComeOperationCategory>().ReverseMap();
         }
     }
 }

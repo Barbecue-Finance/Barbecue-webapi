@@ -5,7 +5,7 @@ namespace Models.DTOs.Purses
 {
     public class IncomeOutcomeDto
     {
-        public virtual ICollection<MoneyOperationDto> OutComing { get; set; }
-        public virtual ICollection<MoneyOperationDto> Incoming { get; set; }
+        public virtual ICollection<OutComeMoneyOperationDto> OutComing { get; set; }
+        public virtual ICollection<IncomeMoneyOperationDto> Incoming { get; set; }
     }
 }

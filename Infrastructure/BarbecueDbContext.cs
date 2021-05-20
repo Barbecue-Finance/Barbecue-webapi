@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Models.Db;
 using Models.Db.Account;
 using Models.Db.MoneyOperations;
+using Models.Db.OperationCategories;
 using Models.Db.Sessions;
 
 namespace Infrastructure
@@ -61,6 +62,9 @@ namespace Infrastructure
         public DbSet<TokenSession> TokenSessions { get; set; }
         public DbSet<IncomeMoneyOperation> IncomeMoneyOperations { get; set; }
         public DbSet<OutComeMoneyOperation> OutComeMoneyOperations { get; set; }
+        
+        public DbSet<IncomeOperationCategory> IncomeOperationCategories { get; set; }
+        public DbSet<OutComeOperationCategory> OutComeOperationCategories { get; set; }
 
         public DbSet<Purse> Purses { get; set; }
         public DbSet<Group> Groups { get; set; }

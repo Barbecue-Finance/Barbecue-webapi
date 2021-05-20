@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Infrastructure.Abstractions;
 using Models.Db;
+using Models.Db.OperationCategories;
 using Models.DTOs.Groups;
 using Models.DTOs.Misc;
 using Services.ApiServices.Abstractions;
@@ -41,7 +42,11 @@ namespace Services.ApiServices.Implementations
 
             group.UsersRelation = new List<UserToGroup> {new() {UserId = creator.Id}};
 
-            group.Purse = new Purse();
+            group.Purse = new Purse
+            {
+                IncomeOperationCategories = new List<IncomeOperationCategory> {new() {Title = "Трансферы"}},
+                OutComeOperationCategories = new List<OutComeOperationCategory> {new() {Title = "Трансферы"}}
+            };
 
             await _groupRepository.Add(group);
 

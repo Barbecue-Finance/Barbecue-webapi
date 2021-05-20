@@ -3,15 +3,17 @@ using System;
 using Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Infrastructure.Data.Migrations
 {
     [DbContext(typeof(BarbecueDbContext))]
-    partial class BarbecueDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210520195309_OperationCategory")]
+    partial class OperationCategory
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -107,7 +109,7 @@ namespace Infrastructure.Data.Migrations
                     b.Property<DateTime>("DateTime")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<long>("IncomeOperationCategoryId")
+                    b.Property<long>("OperationCategoryId")
                         .HasColumnType("bigint");
 
                     b.Property<long>("PurseId")
@@ -115,7 +117,7 @@ namespace Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IncomeOperationCategoryId");
+                    b.HasIndex("OperationCategoryId");
 
                     b.HasIndex("PurseId");
 
@@ -138,7 +140,7 @@ namespace Infrastructure.Data.Migrations
                     b.Property<DateTime>("DateTime")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<long>("OutComeOperationCategoryId")
+                    b.Property<long>("OperationCategoryId")
                         .HasColumnType("bigint");
 
                     b.Property<long>("PurseId")
@@ -146,14 +148,14 @@ namespace Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OutComeOperationCategoryId");
+                    b.HasIndex("OperationCategoryId");
 
                     b.HasIndex("PurseId");
 
                     b.ToTable("OutComeMoneyOperations");
                 });
 
-            modelBuilder.Entity("Models.Db.OperationCategories.IncomeOperationCategory", b =>
+            modelBuilder.Entity("Models.Db.OperationCategory", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -170,27 +172,7 @@ namespace Infrastructure.Data.Migrations
 
                     b.HasIndex("PurseId");
 
-                    b.ToTable("IncomeOperationCategories");
-                });
-
-            modelBuilder.Entity("Models.Db.OperationCategories.OutComeOperationCategory", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<long>("PurseId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PurseId");
-
-                    b.ToTable("OutComeOperationCategories");
+                    b.ToTable("OperationCategory");
                 });
 
             modelBuilder.Entity("Models.Db.Purse", b =>
@@ -281,9 +263,9 @@ namespace Infrastructure.Data.Migrations
 
             modelBuilder.Entity("Models.Db.MoneyOperations.IncomeMoneyOperation", b =>
                 {
-                    b.HasOne("Models.Db.OperationCategories.IncomeOperationCategory", "IncomeOperationCategory")
+                    b.HasOne("Models.Db.OperationCategory", "OperationCategory")
                         .WithMany()
-                        .HasForeignKey("IncomeOperationCategoryId")
+                        .HasForeignKey("OperationCategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -293,16 +275,16 @@ namespace Infrastructure.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("IncomeOperationCategory");
+                    b.Navigation("OperationCategory");
 
                     b.Navigation("Purse");
                 });
 
             modelBuilder.Entity("Models.Db.MoneyOperations.OutComeMoneyOperation", b =>
                 {
-                    b.HasOne("Models.Db.OperationCategories.OutComeOperationCategory", "OutComeOperationCategory")
+                    b.HasOne("Models.Db.OperationCategory", "OperationCategory")
                         .WithMany()
-                        .HasForeignKey("OutComeOperationCategoryId")
+                        .HasForeignKey("OperationCategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -312,26 +294,15 @@ namespace Infrastructure.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("OutComeOperationCategory");
+                    b.Navigation("OperationCategory");
 
                     b.Navigation("Purse");
                 });
 
-            modelBuilder.Entity("Models.Db.OperationCategories.IncomeOperationCategory", b =>
+            modelBuilder.Entity("Models.Db.OperationCategory", b =>
                 {
                     b.HasOne("Models.Db.Purse", "Purse")
-                        .WithMany("IncomeOperationCategories")
-                        .HasForeignKey("PurseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Purse");
-                });
-
-            modelBuilder.Entity("Models.Db.OperationCategories.OutComeOperationCategory", b =>
-                {
-                    b.HasOne("Models.Db.Purse", "Purse")
-                        .WithMany("OutComeOperationCategories")
+                        .WithMany("OperationCategories")
                         .HasForeignKey("PurseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -402,11 +373,9 @@ namespace Infrastructure.Data.Migrations
 
             modelBuilder.Entity("Models.Db.Purse", b =>
                 {
-                    b.Navigation("IncomeOperationCategories");
-
                     b.Navigation("IncomingOperations");
 
-                    b.Navigation("OutComeOperationCategories");
+                    b.Navigation("OperationCategories");
 
                     b.Navigation("OutComingOperations");
                 });

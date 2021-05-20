@@ -9,6 +9,8 @@ namespace Services.ApiServices.Abstractions
     {
         Task<CreatedDto> CreateInvite(CreateInviteDto createInviteDto);
 
+        Task<InviteWithIdDto> GetById(long id);
+
         Task AcceptInvite(long id);
 
         Task RejectInvite(long id);

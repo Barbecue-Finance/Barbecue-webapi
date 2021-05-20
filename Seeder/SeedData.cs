@@ -79,13 +79,15 @@ namespace Seeder
             {
                 Amount = 100,
                 Comment = "Тестовое пополнение1",
-                PurseId = purse1Id
+                PurseId = purse1Id,
+                OperationCategoryTitle = "Зарплата"
             });
             await _moneyOperationService.CreateIncome(new CreateMoneyOperationDto()
             {
                 Amount = 100,
                 Comment = "Тестовое пополнение2",
-                PurseId = purse2Id
+                PurseId = purse2Id,
+                OperationCategoryTitle = "Стипендия"
             });
             await _moneyOperationService.CreateTransfer(new CreateTransferOperationDto()
             {
@@ -93,6 +95,13 @@ namespace Seeder
                 Comment = "Тестовый трансфер",
                 FromPurseId = purse1Id,
                 ToPurseId = purse2Id
+            });
+            await _moneyOperationService.CreateOutCome(new CreateMoneyOperationDto()
+            {
+                Amount = 1000,
+                Comment = "Тестовое снятие",
+                PurseId = purse2Id,
+                OperationCategoryTitle = "Шашлыки"
             });
         }
     }

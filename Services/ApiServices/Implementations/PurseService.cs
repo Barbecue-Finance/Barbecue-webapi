@@ -23,7 +23,9 @@ namespace Services.ApiServices.Implementations
             var purse = await _purseRepository.GetById(
                 id,
                 p => p.IncomingOperations,
-                p => p.OutComingOperations
+                p => p.OutComingOperations,
+                p => p.IncomeOperationCategories,
+                p => p.OutComeOperationCategories
             );
 
             var purseWithIdDto = _mapper.Map<PurseWithIdDto>(purse);
@@ -36,7 +38,9 @@ namespace Services.ApiServices.Implementations
             var purse = await _purseRepository.GetOne(
                 p => p.GroupId == id,
                 p => p.IncomingOperations,
-                p => p.OutComingOperations
+                p => p.OutComingOperations,
+                p => p.IncomeOperationCategories,
+                p => p.OutComeOperationCategories
             );
 
             var purseWithIdDto = _mapper.Map<PurseWithIdDto>(purse);

@@ -35,6 +35,11 @@ namespace Services.ApiServices.Implementations
                 g => g.Invites
             );
 
+            if (invite.IssuerId == invite.RecipientId)
+            {
+                throw new("You can't invite yourself");
+            }
+
             if (group.UsersRelation.All(r => r.UserId != invite.IssuerId))
             {
                 throw new("Not a member of group can't create an invite");
@@ -42,7 +47,7 @@ namespace Services.ApiServices.Implementations
 
             if (group.UsersRelation.Any(r => r.UserId == invite.RecipientId))
             {
-                throw new("Recipient is already of this group!");
+                throw new("Recipient is already in this group!");
             }
 
             if (group.Invites.Any(i => i.RecipientId == invite.RecipientId && i.State == InviteState.Pending))
@@ -58,6 +63,20 @@ namespace Services.ApiServices.Implementations
             return invite.Id;
         }
 
+        public async Task<InviteWithIdDto> GetById(long id)
+        {
+            var invite = await _inviteRepository.GetById(
+                id,
+                i => i.Recipient,
+                i => i.Issuer,
+                i => i.Group
+            );
+
+            var inviteWithIdDto = _mapper.Map<InviteWithIdDto>(invite);
+
+            return inviteWithIdDto;
+        }
+
         public async Task AcceptInvite(long id)
         {
             var invite = await _inviteRepository.GetById(id);
@@ -66,11 +85,6 @@ namespace Services.ApiServices.Implementations
                 invite.GroupId,
                 g => g.UsersRelation
             );
-
-            if (invite.IssuerId == invite.RecipientId)
-            {
-                throw new("You can't invite yourself");
-            }
 
             if (group.UsersRelation.Any(r => r.UserId == invite.RecipientId))
             {
@@ -128,7 +142,7 @@ namespace Services.ApiServices.Implementations
         public async Task<ICollection<InviteWithIdDto>> GetReceived(long id)
         {
             var invites = await _inviteRepository.GetMany(
-                i => i.IssuerId == id,
+                i => i.RecipientId == id,
                 i => i.Recipient,
                 i => i.Issuer,
                 i => i.Group

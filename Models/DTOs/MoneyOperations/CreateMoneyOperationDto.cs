@@ -15,5 +15,7 @@ namespace Models.DTOs.MoneyOperations
 
         [Id(typeof(Purse))]
         public long PurseId { get; set; }
+        
+        public string OperationCategoryTitle { get; set; }
     }
 }

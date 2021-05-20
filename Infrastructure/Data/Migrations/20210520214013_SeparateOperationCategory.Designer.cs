@@ -3,15 +3,17 @@ using System;
 using Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Infrastructure.Data.Migrations
 {
     [DbContext(typeof(BarbecueDbContext))]
-    partial class BarbecueDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210520214013_SeparateOperationCategory")]
+    partial class SeparateOperationCategory
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -107,7 +109,7 @@ namespace Infrastructure.Data.Migrations
                     b.Property<DateTime>("DateTime")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<long>("IncomeOperationCategoryId")
+                    b.Property<long>("OperationCategoryId")
                         .HasColumnType("bigint");
 
                     b.Property<long>("PurseId")
@@ -115,7 +117,7 @@ namespace Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IncomeOperationCategoryId");
+                    b.HasIndex("OperationCategoryId");
 
                     b.HasIndex("PurseId");
 
@@ -138,7 +140,7 @@ namespace Infrastructure.Data.Migrations
                     b.Property<DateTime>("DateTime")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<long>("OutComeOperationCategoryId")
+                    b.Property<long>("OperationCategoryId")
                         .HasColumnType("bigint");
 
                     b.Property<long>("PurseId")
@@ -146,19 +148,23 @@ namespace Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OutComeOperationCategoryId");
+                    b.HasIndex("OperationCategoryId");
 
                     b.HasIndex("PurseId");
 
                     b.ToTable("OutComeMoneyOperations");
                 });
 
-            modelBuilder.Entity("Models.Db.OperationCategories.IncomeOperationCategory", b =>
+            modelBuilder.Entity("Models.Db.OperationCategories.OperationCategory", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<long>("PurseId")
                         .HasColumnType("bigint");
@@ -168,29 +174,9 @@ namespace Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PurseId");
+                    b.ToTable("OperationCategory");
 
-                    b.ToTable("IncomeOperationCategories");
-                });
-
-            modelBuilder.Entity("Models.Db.OperationCategories.OutComeOperationCategory", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<long>("PurseId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PurseId");
-
-                    b.ToTable("OutComeOperationCategories");
+                    b.HasDiscriminator<string>("Discriminator").HasValue("OperationCategory");
                 });
 
             modelBuilder.Entity("Models.Db.Purse", b =>
@@ -252,6 +238,24 @@ namespace Infrastructure.Data.Migrations
                     b.ToTable("UserToGroups");
                 });
 
+            modelBuilder.Entity("Models.Db.OperationCategories.IncomeOperationCategory", b =>
+                {
+                    b.HasBaseType("Models.Db.OperationCategories.OperationCategory");
+
+                    b.HasIndex("PurseId");
+
+                    b.HasDiscriminator().HasValue("IncomeOperationCategory");
+                });
+
+            modelBuilder.Entity("Models.Db.OperationCategories.OutComeOperationCategory", b =>
+                {
+                    b.HasBaseType("Models.Db.OperationCategories.OperationCategory");
+
+                    b.HasIndex("PurseId");
+
+                    b.HasDiscriminator().HasValue("OutComeOperationCategory");
+                });
+
             modelBuilder.Entity("Models.Db.Invite", b =>
                 {
                     b.HasOne("Models.Db.Group", "Group")
@@ -281,9 +285,9 @@ namespace Infrastructure.Data.Migrations
 
             modelBuilder.Entity("Models.Db.MoneyOperations.IncomeMoneyOperation", b =>
                 {
-                    b.HasOne("Models.Db.OperationCategories.IncomeOperationCategory", "IncomeOperationCategory")
+                    b.HasOne("Models.Db.OperationCategories.OperationCategory", "OperationCategory")
                         .WithMany()
-                        .HasForeignKey("IncomeOperationCategoryId")
+                        .HasForeignKey("OperationCategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -293,16 +297,16 @@ namespace Infrastructure.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("IncomeOperationCategory");
+                    b.Navigation("OperationCategory");
 
                     b.Navigation("Purse");
                 });
 
             modelBuilder.Entity("Models.Db.MoneyOperations.OutComeMoneyOperation", b =>
                 {
-                    b.HasOne("Models.Db.OperationCategories.OutComeOperationCategory", "OutComeOperationCategory")
+                    b.HasOne("Models.Db.OperationCategories.OperationCategory", "OperationCategory")
                         .WithMany()
-                        .HasForeignKey("OutComeOperationCategoryId")
+                        .HasForeignKey("OperationCategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -312,29 +316,7 @@ namespace Infrastructure.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("OutComeOperationCategory");
-
-                    b.Navigation("Purse");
-                });
-
-            modelBuilder.Entity("Models.Db.OperationCategories.IncomeOperationCategory", b =>
-                {
-                    b.HasOne("Models.Db.Purse", "Purse")
-                        .WithMany("IncomeOperationCategories")
-                        .HasForeignKey("PurseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Purse");
-                });
-
-            modelBuilder.Entity("Models.Db.OperationCategories.OutComeOperationCategory", b =>
-                {
-                    b.HasOne("Models.Db.Purse", "Purse")
-                        .WithMany("OutComeOperationCategories")
-                        .HasForeignKey("PurseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("OperationCategory");
 
                     b.Navigation("Purse");
                 });
@@ -378,6 +360,28 @@ namespace Infrastructure.Data.Migrations
                     b.Navigation("Group");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Models.Db.OperationCategories.IncomeOperationCategory", b =>
+                {
+                    b.HasOne("Models.Db.Purse", "Purse")
+                        .WithMany("IncomeOperationCategories")
+                        .HasForeignKey("PurseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Purse");
+                });
+
+            modelBuilder.Entity("Models.Db.OperationCategories.OutComeOperationCategory", b =>
+                {
+                    b.HasOne("Models.Db.Purse", "Purse")
+                        .WithMany("OutComeOperationCategories")
+                        .HasForeignKey("PurseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Purse");
                 });
 
             modelBuilder.Entity("Models.Db.Account.User", b =>

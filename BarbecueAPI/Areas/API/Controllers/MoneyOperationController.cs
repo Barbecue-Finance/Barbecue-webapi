@@ -24,7 +24,7 @@ namespace BarbecueAPI.Areas.API.Controllers
 
         [HttpPost]
         [TypeFilter(typeof(AuthTokenFilter))]
-        public async Task<ActionResult<CreatedDto>> CreateIncome(CreateMoneyOperationDto createMoneyOperationDto)
+        public async Task<ActionResult<CreatedDto>> CreateIncome([FromBody] CreateMoneyOperationDto createMoneyOperationDto)
         {
             try
             {
@@ -40,7 +40,7 @@ namespace BarbecueAPI.Areas.API.Controllers
 
         [HttpPost]
         [TypeFilter(typeof(AuthTokenFilter))]
-        public async Task<ActionResult<CreatedDto>> CreateOutCome(CreateMoneyOperationDto createMoneyOperationDto)
+        public async Task<ActionResult<CreatedDto>> CreateOutCome([FromBody] CreateMoneyOperationDto createMoneyOperationDto)
         {
             try
             {
@@ -56,7 +56,7 @@ namespace BarbecueAPI.Areas.API.Controllers
 
         [HttpPost]
         [TypeFilter(typeof(AuthTokenFilter))]
-        public async Task<ActionResult<(CreatedDto outcomeId, CreatedDto incomeId)>> CreateTransfer(CreateTransferOperationDto createTransferOperationDto)
+        public async Task<ActionResult<(CreatedDto outcomeId, CreatedDto incomeId)>> CreateTransfer([FromBody] CreateTransferOperationDto createTransferOperationDto)
         {
             try
             {
@@ -72,7 +72,7 @@ namespace BarbecueAPI.Areas.API.Controllers
 
         [HttpGet]
         [TypeFilter(typeof(AuthTokenFilter))]
-        public async Task<ActionResult<IncomeOutcomeDto>> GetByPurse([Id(typeof(Purse))]long id)
+        public async Task<ActionResult<IncomeOutcomeDto>> GetByPurse([Id(typeof(Purse))] long id)
         {
             try
             {
@@ -88,11 +88,11 @@ namespace BarbecueAPI.Areas.API.Controllers
 
         [HttpPost]
         [TypeFilter(typeof(AuthTokenFilter))]
-        public async Task<ActionResult> UpdateIncome(MoneyOperationDto moneyOperationDto)
+        public async Task<ActionResult> UpdateIncome([FromBody] OutComeMoneyOperationDto outComeMoneyOperationDto)
         {
             try
             {
-                await _moneyOperationService.UpdateIncome(moneyOperationDto);
+                await _moneyOperationService.UpdateIncome(outComeMoneyOperationDto);
                 return Ok();
             }
             catch (Exception ex)
@@ -103,11 +103,11 @@ namespace BarbecueAPI.Areas.API.Controllers
 
         [HttpPost]
         [TypeFilter(typeof(AuthTokenFilter))]
-        public async Task<ActionResult> UpdateOutCome(MoneyOperationDto moneyOperationDto)
+        public async Task<ActionResult> UpdateOutCome([FromBody] OutComeMoneyOperationDto outComeMoneyOperationDto)
         {
             try
             {
-                await _moneyOperationService.UpdateOutCome(moneyOperationDto);
+                await _moneyOperationService.UpdateOutCome(outComeMoneyOperationDto);
                 return Ok();
             }
             catch (Exception ex)

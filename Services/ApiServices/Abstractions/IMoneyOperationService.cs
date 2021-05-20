@@ -16,7 +16,7 @@ namespace Services.ApiServices.Abstractions
 
         Task<IncomeOutcomeDto> GetByPurse(long id);
         
-        Task UpdateIncome(MoneyOperationDto moneyOperationDto);
-        Task UpdateOutCome(MoneyOperationDto moneyOperationDto);
+        Task UpdateIncome(OutComeMoneyOperationDto outComeMoneyOperationDto);
+        Task UpdateOutCome(OutComeMoneyOperationDto outComeMoneyOperationDto);
     }
 }
