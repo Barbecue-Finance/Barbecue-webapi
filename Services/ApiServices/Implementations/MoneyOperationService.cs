@@ -54,6 +54,10 @@ namespace Services.ApiServices.Implementations
                 await _incomeOperationCategoryRepository.Add(category);
                 incomeMoneyOperation.IncomeOperationCategory = category;
             }
+            else
+            {
+                incomeMoneyOperation.IncomeOperationCategoryId = operationCategory.Id;
+            }
 
             await _incomeMoneyOperationRepository.Add(incomeMoneyOperation);
 
@@ -78,6 +82,10 @@ namespace Services.ApiServices.Implementations
                 await _outComeOperationCategoryRepository.Add(category);
                 outComeMoneyOperation.OutComeOperationCategory = category;
             }
+            else
+            {
+                outComeMoneyOperation.OutComeOperationCategoryId = operationCategory.Id;
+            }
 
             await _outComeMoneyOperationRepository.Add(outComeMoneyOperation);
 
@@ -94,7 +102,7 @@ namespace Services.ApiServices.Implementations
 
             outComeMoneyOperation.DateTime = DateTime.Now;
             outComeMoneyOperation.OutComeOperationCategoryId = outComeOperationCategory.Id;
-            
+
             incomeMoneyOperation.DateTime = DateTime.Now;
             incomeMoneyOperation.IncomeOperationCategoryId = incomeOperationCategory.Id;
 
@@ -109,6 +117,16 @@ namespace Services.ApiServices.Implementations
             var purse = await _purseRepository.GetById(id,
                 p => p.IncomingOperations,
                 p => p.OutComingOperations
+            );
+
+            await _incomeMoneyOperationRepository.GetMany(i => i.PurseId == id,
+                i => i.User,
+                i => i.IncomeOperationCategory
+            );
+
+            await _outComeMoneyOperationRepository.GetMany(i => i.PurseId == id,
+                i => i.User,
+                i => i.OutComeOperationCategory
             );
 
             var incomeOutcomeDto = _mapper.Map<IncomeOutcomeDto>(purse);

@@ -49,14 +49,14 @@ namespace Seeder
             long user1Id = await _userService.Create(new CreateUserDto()
             {
                 Login = "User1",
-                Password = "User1",
+                Password = Utils.CreateMD5("User1"),
                 Username = "Unique Username1"
             });
 
             long user2Id = await _userService.Create(new CreateUserDto()
             {
                 Login = "User2",
-                Password = "User2",
+                Password = Utils.CreateMD5("User2"),
                 Username = "Unique Username2"
             });
 
@@ -80,28 +80,32 @@ namespace Seeder
                 Amount = 100,
                 Comment = "Тестовое пополнение1",
                 PurseId = purse1Id,
-                OperationCategoryTitle = "Зарплата"
+                OperationCategoryTitle = "Зарплата",
+                UserId = user1Id
             });
             await _moneyOperationService.CreateIncome(new CreateMoneyOperationDto()
             {
                 Amount = 100,
                 Comment = "Тестовое пополнение2",
                 PurseId = purse2Id,
-                OperationCategoryTitle = "Стипендия"
+                OperationCategoryTitle = "Стипендия",
+                UserId = user2Id
             });
             await _moneyOperationService.CreateTransfer(new CreateTransferOperationDto()
             {
                 Amount = 10,
                 Comment = "Тестовый трансфер",
                 FromPurseId = purse1Id,
-                ToPurseId = purse2Id
+                ToPurseId = purse2Id,
+                UserId = user1Id
             });
             await _moneyOperationService.CreateOutCome(new CreateMoneyOperationDto()
             {
                 Amount = 1000,
                 Comment = "Тестовое снятие",
                 PurseId = purse2Id,
-                OperationCategoryTitle = "Шашлыки"
+                OperationCategoryTitle = "Шашлыки",
+                UserId = user2Id
             });
         }
     }

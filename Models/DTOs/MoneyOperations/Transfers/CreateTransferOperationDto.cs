@@ -1,4 +1,5 @@
 ﻿using Models.Db;
+using Models.Db.Account;
 
 namespace Models.DTOs.MoneyOperations.Transfers
 {
@@ -13,5 +14,8 @@ namespace Models.DTOs.MoneyOperations.Transfers
         
         [Id(typeof(Purse))]
         public long ToPurseId { get; set; }
+        
+        [Id(typeof(User))]
+        public long UserId { get; set; }
     }
 }

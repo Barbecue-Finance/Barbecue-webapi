@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Models.Db.Common;
+using Models.Db.MoneyOperations;
 using Models.Db.Sessions;
 
 namespace Models.Db.Account
@@ -19,5 +20,8 @@ namespace Models.Db.Account
         
         public virtual ICollection<Invite> IssuedInvites { get; set; }
         public virtual ICollection<Invite> ReceivedInvites { get; set; }
+        
+        public virtual ICollection<IncomeMoneyOperation> IncomeMoneyOperations { get; set; }
+        public virtual ICollection<OutComeMoneyOperation> OutComeMoneyOperations { get; set; }
     }
 }

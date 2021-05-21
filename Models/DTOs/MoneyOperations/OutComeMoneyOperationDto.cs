@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using Models.Db;
+using Models.Db.Account;
 
 namespace Models.DTOs.MoneyOperations
 {
@@ -28,5 +29,10 @@ namespace Models.DTOs.MoneyOperations
         [Required(AllowEmptyStrings = true)]
         [String(1, 64)]
         public string OutComeOperationCategoryTitle { get; set; }
+        
+        [Id(typeof(User))]
+        public long UserId { get; set; }
+
+        public string UserUsername { get; set; }
     }
 }
