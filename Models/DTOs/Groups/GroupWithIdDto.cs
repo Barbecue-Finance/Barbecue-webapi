@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using Models.Db;
 using Models.DTOs.Users;
 
 namespace Models.DTOs.Groups
@@ -8,6 +10,8 @@ namespace Models.DTOs.Groups
         public long Id { get; set; }
 
         public string Title { get; set; }
+        
+        public GroupType Type { get; set; }
 
         public ICollection<UserWithIdDto> Users { get; set; }
     }

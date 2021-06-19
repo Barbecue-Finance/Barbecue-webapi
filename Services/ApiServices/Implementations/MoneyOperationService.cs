@@ -70,7 +70,7 @@ namespace Services.ApiServices.Implementations
 
             outComeMoneyOperation.DateTime = DateTime.Now;
 
-            var operationCategory = await _incomeOperationCategoryRepository.GetOne(c => c.Title == createMoneyOperationDto.OperationCategoryTitle && c.PurseId == createMoneyOperationDto.PurseId);
+            var operationCategory = await _outComeOperationCategoryRepository.GetOne(c => c.Title == createMoneyOperationDto.OperationCategoryTitle && c.PurseId == createMoneyOperationDto.PurseId);
 
             if (operationCategory == null)
             {

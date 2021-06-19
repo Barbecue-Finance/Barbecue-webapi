@@ -7,7 +7,9 @@ namespace Models.Db
     public class Group : IdEntity
     {
         public string Title { get; set; }
-        
+
+        public GroupType Type { get; set; }
+
         public virtual Purse Purse { get; set; }
 
         public virtual ICollection<User> Users { get; set; }

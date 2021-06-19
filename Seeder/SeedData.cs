@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
+using Models.Db;
 using Models.DTOs.Groups;
 using Models.DTOs.MoneyOperations;
 using Models.DTOs.MoneyOperations.Transfers;
@@ -63,13 +64,91 @@ namespace Seeder
             long group1Id = await _groupService.Create(new CreateGroupDto()
             {
                 Title = "Тестовая группа 1",
-                CreatorId = user1Id
+                CreatorId = user1Id,
+                Type = GroupType.Classic
+            });
+
+            long event1Id = await _groupService.Create(new CreateGroupDto()
+            {
+                Title = "Тестовое событие 1",
+                CreatorId = user1Id,
+                Type = GroupType.Event
             });
 
             long group2Id = await _groupService.Create(new CreateGroupDto()
             {
                 Title = "Тестовая группа 2",
-                CreatorId = user2Id
+                CreatorId = user2Id,
+                Type = GroupType.Classic
+            });
+
+            long personalId = await _groupService.Create(new CreateGroupDto()
+            {
+                Title = "Личное",
+                CreatorId = user2Id,
+                Type = GroupType.Classic
+            });
+
+            long personalPurseId = (await _purseService.GetByGroup(personalId)).Id;
+
+            await _moneyOperationService.CreateIncome(new CreateMoneyOperationDto()
+            {
+                Amount = 100,
+                Comment = "Мама дала 100р",
+                OperationCategoryTitle = "Карманные",
+                PurseId = personalPurseId,
+                UserId = user2Id
+            });
+            await _moneyOperationService.CreateOutCome(new CreateMoneyOperationDto()
+            {
+                Amount = 50,
+                Comment = "Купил чикенбургер",
+                OperationCategoryTitle = "Фастфуд",
+                PurseId = personalPurseId,
+                UserId = user2Id
+            });
+            await _moneyOperationService.CreateOutCome(new CreateMoneyOperationDto()
+            {
+                Amount = 500,
+                Comment = "Нашёл на улице",
+                OperationCategoryTitle = "Повезло",
+                PurseId = personalPurseId,
+                UserId = user2Id
+            });
+
+
+            long shashlikiId = await _groupService.Create(new CreateGroupDto()
+            {
+                Title = "Шашлыки",
+                CreatorId = user2Id,
+                Type = GroupType.Classic
+            });
+
+            long shashlikiPurseId = (await _purseService.GetByGroup(shashlikiId)).Id;
+
+            await _moneyOperationService.CreateIncome(new CreateMoneyOperationDto()
+            {
+                Amount = 500,
+                Comment = "Скромная сумма",
+                OperationCategoryTitle = "Мясо",
+                PurseId = shashlikiPurseId,
+                UserId = user2Id
+            });
+            await _moneyOperationService.CreateIncome(new CreateMoneyOperationDto()
+            {
+                Amount = 200,
+                Comment = "Скромная сумма",
+                OperationCategoryTitle = "Овощи",
+                PurseId = shashlikiPurseId,
+                UserId = user2Id
+            });
+            await _moneyOperationService.CreateIncome(new CreateMoneyOperationDto()
+            {
+                Amount = 200,
+                Comment = "Скромная сумма",
+                OperationCategoryTitle = "Фрукты",
+                PurseId = shashlikiPurseId,
+                UserId = user2Id
             });
 
             var purse1Id = (await _purseService.GetByGroup(group1Id)).Id;
@@ -82,14 +161,6 @@ namespace Seeder
                 PurseId = purse1Id,
                 OperationCategoryTitle = "Зарплата",
                 UserId = user1Id
-            });
-            await _moneyOperationService.CreateIncome(new CreateMoneyOperationDto()
-            {
-                Amount = 100,
-                Comment = "Тестовое пополнение2",
-                PurseId = purse2Id,
-                OperationCategoryTitle = "Стипендия",
-                UserId = user2Id
             });
             await _moneyOperationService.CreateTransfer(new CreateTransferOperationDto()
             {
